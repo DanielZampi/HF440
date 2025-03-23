@@ -39,7 +39,7 @@
             position: relative;
             width: 100%;
             max-width: 960px;
-            height: 540px;
+            padding-top: 56.25%; /* Relación de aspecto 16:9 (540/960 = 0.5625) */
             background-color: #000;
             border-radius: 10px;
             overflow: hidden;
@@ -48,16 +48,21 @@
         
         #intro-video,
         #content-video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
         .hotspot-container {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-size: contain;
+            background-size: cover; /* Ajusta la imagen de fondo para cubrir el contenedor */
             background-position: center;
             background-repeat: no-repeat;
             background-color: #000;
@@ -152,17 +157,55 @@
         }
         
         #video-container {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             display: none;
         }
         
+        /* Ajustar hotspots para diferentes tamaños de pantalla */
         #hotspot1 { top: 3%; left: 47%; }
         #hotspot2 { top: 20%; left: 43%; }
         #hotspot3 { top: 50%; left: 60%; }
         #hotspot4 { top: 83%; left: 40%; }
         #hotspot5 { top: 50%; left: 45%; }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            .hotspot {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .hotspot-title {
+                font-size: 12px;
+                bottom: -25px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hotspot {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .hotspot-title {
+                font-size: 10px;
+                bottom: -20px;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
 
         .error-message {
             position: absolute;
@@ -191,9 +234,10 @@
 
             <!-- Video Introductorio -->
             <video id="intro-video" controls preload="auto">
+                <source src="https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ" type="video/mp4">
                 Tu navegador no soporta videos HTML5.
             </video>
-            <div id="intro-error" class="error-message">No se pudo cargar el video introductorio. Asegúrate de que 'intro.mp4' esté en la carpeta.</div>
+            <div id="intro-error" class="error-message">No se pudo cargar el video introductorio.</div>
             
             <!-- Imagen con Hotspots -->
             <div class="hotspot-container" id="hotspot-screen">
@@ -240,22 +284,19 @@
         const contentVideo = document.getElementById('content-video');
         const introError = document.getElementById('intro-error');
         
-        // URLs de los videos (todos en la misma carpeta)
+        // URLs de los videos (usando URLs externas de Google Drive)
         const videoURLs = {
-            intro: 'intro.mp4',
-            video1: 'PARTE3.mp4',
-            video2: 'PARTE4.mp4',
-            video3: 'PARTE5.mp4',
-            video4: 'PARTE6.mp4',
-            video5: 'PARTE7.mp4'
+            intro: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ',
+            video1: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ',
+            video2: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ',
+            video3: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ',
+            video4: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ',
+            video5: 'https://drive.google.com/uc?export=download&id=TU_ID_AQUÍ'
         };
         
         // Configurar imagen de fondo
         hotspotScreen.style.backgroundImage = "url('fondo.jpg')";
         
-        // Configurar video introductorio
-        introVideo.src = videoURLs.intro;
-
         introVideo.addEventListener('error', function() {
             introError.style.display = 'block';
             introVideo.style.display = 'none';
